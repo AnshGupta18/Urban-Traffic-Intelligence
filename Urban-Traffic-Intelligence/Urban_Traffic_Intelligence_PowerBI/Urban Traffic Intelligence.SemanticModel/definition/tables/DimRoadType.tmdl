@@ -1,0 +1,29 @@
+table DimRoadType
+	lineageTag: 8d5c8f3b-1b32-4c9e-9d5e-dim2
+
+	column RoadTypeKey
+		dataType: string
+		lineageTag: 043967cc-7edf-454f-90c5-707c2c606456
+		summarizeBy: none
+		sourceColumn: RoadTypeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column road_type
+		dataType: string
+		lineageTag: 00de67b9-b47e-49d9-8dfd-72261c9749d2
+		summarizeBy: none
+		sourceColumn: road_type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimRoadType = m
+		mode: import
+		source =
+				let
+				    Source = FactAccidents,
+				    Keep = Table.SelectColumns(Source, {"RoadTypeKey", "road_type"}),
+				    DistinctRows = Table.Distinct(Keep, {"RoadTypeKey"})
+				in
+				    DistinctRows
+

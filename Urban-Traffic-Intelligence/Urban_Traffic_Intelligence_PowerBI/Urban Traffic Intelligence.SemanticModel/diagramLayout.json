@@ -1,0 +1,113 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 31.569061960533283
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 682.39401784401946,
+            "y": 468.33382332746362
+          },
+          "nodeIndex": "DimCause",
+          "nodeLineageTag": "8d5c8f3b-1b32-4c9e-9d5e-dim4",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 306.37995219586526,
+            "y": -50
+          },
+          "nodeIndex": "DimDate",
+          "nodeLineageTag": "8d5c8f3b-1b32-4c9e-9d5e-dim0",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 451.60201143554355,
+            "y": 646.50633512569721
+          },
+          "nodeIndex": "DimLocation",
+          "nodeLineageTag": "8d5c8f3b-1b32-4c9e-9d5e-dim1",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 106.31724423540425,
+            "y": 642.661183314668
+          },
+          "nodeIndex": "DimRoadType",
+          "nodeLineageTag": "8d5c8f3b-1b32-4c9e-9d5e-dim2",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 645.12579326028117,
+            "y": 118.08255383493338
+          },
+          "nodeIndex": "DimSeverity",
+          "nodeLineageTag": "8d5c8f3b-1b32-4c9e-9d5e-dim5",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 296.19152241314259
+          },
+          "nodeIndex": "DimWeather",
+          "nodeLineageTag": "8d5c8f3b-1b32-4c9e-9d5e-dim3",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 390.49470946887573,
+            "y": 296.26177369650532
+          },
+          "nodeIndex": "FactAccidents",
+          "nodeLineageTag": "8d5c8f3b-1b32-4c9e-9d5e-factaccidents",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 70.95554390096892,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

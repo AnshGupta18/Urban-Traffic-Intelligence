@@ -1,0 +1,29 @@
+table DimSeverity
+	lineageTag: 8d5c8f3b-1b32-4c9e-9d5e-dim5
+
+	column SeverityKey
+		dataType: string
+		lineageTag: c33b12e0-5736-43b5-a8de-e9dde301c63c
+		summarizeBy: none
+		sourceColumn: SeverityKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column accident_severity
+		dataType: string
+		lineageTag: 09643e2d-1e5e-448c-8e66-62e51be80024
+		summarizeBy: none
+		sourceColumn: accident_severity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSeverity = m
+		mode: import
+		source =
+				let
+				    Source = FactAccidents,
+				    Keep = Table.SelectColumns(Source, {"SeverityKey", "accident_severity"}),
+				    DistinctRows = Table.Distinct(Keep, {"SeverityKey"})
+				in
+				    DistinctRows
+

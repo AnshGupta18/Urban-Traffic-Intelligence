@@ -1,0 +1,105 @@
+table DimDate
+	lineageTag: 8d5c8f3b-1b32-4c9e-9d5e-dim0
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 059e0328-63d3-484a-9e5e-1e4f8d4b29fa
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: 874111eb-fe9f-4e06-8dff-8b38eb7fcc93
+			defaultHierarchy: LocalDateTable_0569c6ff-55c4-4629-8ee0-ea320126dbfc.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DateKey
+		dataType: string
+		lineageTag: 7ea87b41-22f7-47e0-bbff-437b1cd5d854
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: c7c3fb18-9570-4988-ad3b-04fd77407403
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: e4d36235-6055-409b-991b-c43f83fc7c8e
+		summarizeBy: sum
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: 35c78bce-7f28-4ec1-b455-4c972125e3ed
+		summarizeBy: none
+		sourceColumn: Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 9d56e202-907a-4775-9d55-2632c7d5e662
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: a2dfe100-48d2-4920-90e1-1489cc46c304
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week'
+		dataType: string
+		lineageTag: 6adfedd1-1e22-4d23-a34e-7533121fe58d
+		summarizeBy: none
+		sourceColumn: Day of Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Weekend'
+		dataType: int64
+		formatString: 0
+		lineageTag: 811f6988-45d4-48c0-9ffd-24401afe9021
+		summarizeBy: sum
+		sourceColumn: Is Weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				    Source = FactAccidents,
+				    Keep = Table.SelectColumns(Source, {"date", "DateKey"}),
+				    DistinctRows = Table.Distinct(Keep),
+				    AddYear = Table.AddColumn(DistinctRows, "Year", each Date.Year([date]), Int64.Type),
+				    AddMonthNumber = Table.AddColumn(AddYear, "Month Number", each Date.Month([date]), Int64.Type),
+				    AddMonthName = Table.AddColumn(AddMonthNumber, "Month Name", each Date.MonthName([date]), type text),
+				    AddQuarter = Table.AddColumn(AddMonthName, "Quarter", each "Q" & Text.From(Date.QuarterOfYear([date])), type text),
+				    AddDay = Table.AddColumn(AddQuarter, "Day", each Date.Day([date]), Int64.Type),
+				    AddDayOfWeek = Table.AddColumn(AddDay, "Day of Week", each Date.DayOfWeekName([date]), type text),
+				    AddIsWeekend = Table.AddColumn(AddDayOfWeek, "Is Weekend", each if Date.DayOfWeek([date], Day.Monday) >= 5 then 1 else 0, Int64.Type),
+				    RemoveDupes = Table.Distinct(AddIsWeekend, {"DateKey"})
+				in
+				    RemoveDupes
+

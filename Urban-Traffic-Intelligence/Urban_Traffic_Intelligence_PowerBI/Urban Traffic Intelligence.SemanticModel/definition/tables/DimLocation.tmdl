@@ -1,0 +1,57 @@
+table DimLocation
+	lineageTag: 8d5c8f3b-1b32-4c9e-9d5e-dim1
+
+	column LocationKey
+		dataType: string
+		lineageTag: c95185f8-011b-4fee-97d0-7b0585047f69
+		summarizeBy: none
+		sourceColumn: LocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: b7c2b5d0-bb69-4454-aada-b5f68d3a2a99
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: 34437b5e-b771-4e86-99e7-f411c88bcb1d
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		lineageTag: 4efd08e4-1752-4f14-9455-821bdd5b8f1d
+		summarizeBy: none
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: 0385849c-5e02-45e5-97a3-82856df672b3
+		summarizeBy: none
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition DimLocation = m
+		mode: import
+		source =
+				let
+				    Source = FactAccidents,
+				    Keep = Table.SelectColumns(Source, {"LocationKey", "city", "state", "latitude", "longitude"}),
+				    DistinctRows = Table.Distinct(Keep, {"LocationKey"})
+				in
+				    DistinctRows
+

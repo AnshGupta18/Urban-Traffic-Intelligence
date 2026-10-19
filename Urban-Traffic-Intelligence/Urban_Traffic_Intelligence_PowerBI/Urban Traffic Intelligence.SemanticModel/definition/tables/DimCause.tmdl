@@ -1,0 +1,29 @@
+table DimCause
+	lineageTag: 8d5c8f3b-1b32-4c9e-9d5e-dim4
+
+	column CauseKey
+		dataType: string
+		lineageTag: 823d1d72-3b32-4c24-bd15-e5af74024d70
+		summarizeBy: none
+		sourceColumn: CauseKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column cause
+		dataType: string
+		lineageTag: 72037d02-7e49-4b99-a211-d6a85819b525
+		summarizeBy: none
+		sourceColumn: cause
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCause = m
+		mode: import
+		source =
+				let
+				    Source = FactAccidents,
+				    Keep = Table.SelectColumns(Source, {"CauseKey", "cause"}),
+				    DistinctRows = Table.Distinct(Keep, {"CauseKey"})
+				in
+				    DistinctRows
+

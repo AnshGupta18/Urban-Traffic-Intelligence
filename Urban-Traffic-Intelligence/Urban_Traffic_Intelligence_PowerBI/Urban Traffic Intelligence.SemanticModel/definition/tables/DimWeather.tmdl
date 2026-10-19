@@ -1,0 +1,37 @@
+table DimWeather
+	lineageTag: 8d5c8f3b-1b32-4c9e-9d5e-dim3
+
+	column WeatherKey
+		dataType: string
+		lineageTag: 541b0633-7803-4ad0-a82f-6ef37603fc04
+		summarizeBy: none
+		sourceColumn: WeatherKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column weather
+		dataType: string
+		lineageTag: 6a4a7649-ac06-4570-abf2-1656663d2ee8
+		summarizeBy: none
+		sourceColumn: weather
+
+		annotation SummarizationSetBy = Automatic
+
+	column visibility
+		dataType: string
+		lineageTag: 6054e728-1cf9-476f-9e32-2941259fc52a
+		summarizeBy: none
+		sourceColumn: visibility
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimWeather = m
+		mode: import
+		source =
+				let
+				    Source = FactAccidents,
+				    Keep = Table.SelectColumns(Source, {"WeatherKey", "weather", "visibility"}),
+				    DistinctRows = Table.Distinct(Keep, {"WeatherKey"})
+				in
+				    DistinctRows
+

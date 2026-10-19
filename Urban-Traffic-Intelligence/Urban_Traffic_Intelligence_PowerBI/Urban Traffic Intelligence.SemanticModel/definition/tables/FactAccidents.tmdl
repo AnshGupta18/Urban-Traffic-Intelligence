@@ -1,0 +1,380 @@
+table FactAccidents
+	lineageTag: 8d5c8f3b-1b32-4c9e-9d5e-factaccidents
+
+	measure 'Accident Records' = COUNTROWS('FactAccidents')
+		formatString: #,##0
+		lineageTag: 043bb1d6-9c34-406a-be0a-18aeb7e3fde4
+
+	measure 'Fatal Records' = CALCULATE(COUNTROWS('FactAccidents'), 'FactAccidents'[SeverityKey] = "fatal")
+		formatString: #,##0
+		lineageTag: 3e9ddefd-b91e-4b10-8854-4aa403d51a70
+
+	measure 'Total Casualties' = SUM('FactAccidents'[casualties])
+		formatString: #,##0
+		lineageTag: b7982595-d07e-45e5-a327-2ee3600e1d1c
+
+	measure 'Average Risk Score' = AVERAGE('FactAccidents'[risk_score])
+		formatString: 0.00
+		lineageTag: 5493103a-d674-4f5f-9b15-d2f5d53b2348
+
+	measure 'Average Casualties per Accident' = DIVIDE([Total Casualties], [Accident Records])
+		formatString: 0.00
+		lineageTag: 7eb0eb59-d251-453a-b988-ca7f6595f7be
+
+	measure 'Peak Hour Records' = CALCULATE([Accident Records], 'FactAccidents'[is_peak_hour] = 1)
+		formatString: #,##0
+		lineageTag: 226dac7f-1985-4b34-93cd-25ea9488b2d6
+
+	measure 'Weekend Records' = CALCULATE([Accident Records], 'FactAccidents'[is_weekend] = 1)
+		formatString: #,##0
+		lineageTag: 3179c132-79ac-402f-924e-c0ae483bbc31
+
+	column accident_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 66f5b2cf-cbb4-4888-ab2c-c24b81ec16ab
+		summarizeBy: sum
+		sourceColumn: accident_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 1393598f-b2a3-4b04-8ad7-83540ad77fa1
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column state
+		dataType: string
+		lineageTag: ca89ebc4-efad-49e6-b0f5-706157c5b375
+		summarizeBy: none
+		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		lineageTag: 95d2c687-a996-4c16-9eba-53475560cf8f
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: 3d836a7a-f27d-4c5d-8fb9-b4e8d98daf24
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6753e0d0-351b-4623-88cf-d7ea7fb01e05
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variation
+			isDefault
+			relationship: 34900c09-6e4e-4fe1-bfe5-d4f4303fec0d
+			defaultHierarchy: LocalDateTable_6756d170-d75d-40af-acdd-7fb778c84dbd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column time
+		dataType: string
+		lineageTag: e33b1538-bc4b-4ea6-bae3-5150dba131ad
+		summarizeBy: none
+		sourceColumn: time
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour
+		dataType: int64
+		formatString: 0
+		lineageTag: f7a2c35d-be80-4b8b-a258-d1b66c24fb5c
+		summarizeBy: sum
+		sourceColumn: hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: string
+		lineageTag: d317776b-c167-4e93-9264-5da886fa7601
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_weekend
+		dataType: int64
+		formatString: 0
+		lineageTag: d3cb8ef4-b05b-45a1-907f-27da75996cdd
+		summarizeBy: sum
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column road_type
+		dataType: string
+		lineageTag: c28a1b22-3139-4430-855e-05b97079276d
+		summarizeBy: none
+		sourceColumn: road_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column lanes
+		dataType: int64
+		formatString: 0
+		lineageTag: 5bf0dfdc-c351-454f-b77e-9597f5456c74
+		summarizeBy: sum
+		sourceColumn: lanes
+
+		annotation SummarizationSetBy = Automatic
+
+	column traffic_signal
+		dataType: int64
+		formatString: 0
+		lineageTag: 90a18ffd-7192-4165-9b55-6ec9f1a01556
+		summarizeBy: sum
+		sourceColumn: traffic_signal
+
+		annotation SummarizationSetBy = Automatic
+
+	column weather
+		dataType: string
+		lineageTag: a5198f4d-ef49-4533-872e-1f9842c705fc
+		summarizeBy: none
+		sourceColumn: weather
+
+		annotation SummarizationSetBy = Automatic
+
+	column visibility
+		dataType: string
+		lineageTag: a2028a2e-21f5-468d-93f3-e123e380f8f8
+		summarizeBy: none
+		sourceColumn: visibility
+
+		annotation SummarizationSetBy = Automatic
+
+	column temperature
+		dataType: double
+		lineageTag: 2b521af5-5621-4901-bec5-5856d44aa05a
+		summarizeBy: sum
+		sourceColumn: temperature
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column traffic_density
+		dataType: string
+		lineageTag: 86f06d79-29d1-4be7-8460-41dbd8512839
+		summarizeBy: none
+		sourceColumn: traffic_density
+
+		annotation SummarizationSetBy = Automatic
+
+	column cause
+		dataType: string
+		lineageTag: 436786c3-b53a-459c-9899-f4b6fbb5d284
+		summarizeBy: none
+		sourceColumn: cause
+
+		annotation SummarizationSetBy = Automatic
+
+	column accident_severity
+		dataType: string
+		lineageTag: 575b53fd-b2d5-4f44-a4c8-bc516ee6723a
+		summarizeBy: none
+		sourceColumn: accident_severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column vehicles_involved
+		dataType: int64
+		formatString: 0
+		lineageTag: 20a75f0d-3666-4c0a-af20-cb33cc373d32
+		summarizeBy: sum
+		sourceColumn: vehicles_involved
+
+		annotation SummarizationSetBy = Automatic
+
+	column casualties
+		dataType: int64
+		formatString: 0
+		lineageTag: 83324d41-e6dd-4f3c-83ed-787391de6b04
+		summarizeBy: sum
+		sourceColumn: casualties
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_peak_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: db67c6c9-c107-4dbf-8d6d-f89f9b5c978b
+		summarizeBy: sum
+		sourceColumn: is_peak_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column festival
+		dataType: string
+		lineageTag: 6a00cffb-0b0a-4787-8323-b6817d6604af
+		summarizeBy: none
+		sourceColumn: festival
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_score
+		dataType: double
+		lineageTag: 99124780-a9a7-497d-8531-554af82dec71
+		summarizeBy: sum
+		sourceColumn: risk_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LocationKey
+		dataType: string
+		lineageTag: b1df2690-1a9d-4edf-a9c5-d9fd6f736564
+		summarizeBy: none
+		sourceColumn: LocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: string
+		lineageTag: ac619c45-a266-4e35-a108-9d7c4f8567e0
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RoadTypeKey
+		dataType: string
+		lineageTag: 47d3155f-bf7d-4a5a-ba28-403a0ae86fbb
+		summarizeBy: none
+		sourceColumn: RoadTypeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeatherKey
+		dataType: string
+		lineageTag: 600ed7e8-5415-446c-b346-b6eb27240555
+		summarizeBy: none
+		sourceColumn: WeatherKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CauseKey
+		dataType: string
+		lineageTag: 88c1e287-90b0-4a7c-9fc5-75b830de70ae
+		summarizeBy: none
+		sourceColumn: CauseKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SeverityKey
+		dataType: string
+		lineageTag: dfa0fa49-d03d-45b0-9fde-e2485f8471ea
+		summarizeBy: none
+		sourceColumn: SeverityKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 9862deeb-8a8d-4340-909b-60db9f450a05
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 25688695-25ac-4152-a209-95d3959ea67d
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: ed6eed4c-3c55-4e74-9ad6-988bfc8429a1
+		summarizeBy: none
+		sourceColumn: Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hour Label'
+		dataType: string
+		lineageTag: 553ae624-82a1-40eb-8305-5078efc72175
+		summarizeBy: none
+		sourceColumn: Hour Label
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactAccidents = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(Web.Contents("https://raw.githubusercontent.com/Aditya2213/INDIAN_ROAD_ACCIDENT_DATASET_DASHBOARD/main/indian_roads_dataset.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    CleanText = Table.TransformColumns(PromotedHeaders, {
+				        {"city", each Text.Trim(_), type text}, {"state", each Text.Trim(_), type text},
+				        {"day_of_week", each Text.Trim(_), type text}, {"road_type", each Text.Trim(_), type text},
+				        {"weather", each Text.Trim(_), type text}, {"visibility", each Text.Trim(_), type text},
+				        {"traffic_density", each Text.Trim(_), type text}, {"cause", each Text.Trim(_), type text},
+				        {"accident_severity", each Text.Trim(_), type text},
+				        {"festival", each if _ = null then null else Text.Trim(_), type text}
+				    }),
+				    ParseDate = (x as any) as nullable date =>
+				        let
+				            s = Text.Trim(Text.From(x)),
+				            p = Text.Split(s, "-")
+				        in
+				            if List.Count(p) = 3 then
+				                try #date(Number.FromText(p{2}), Number.FromText(p{1}), Number.FromText(p{0})) otherwise null
+				            else null,
+				    Typed = Table.TransformColumnTypes(CleanText, {
+				        {"accident_id", Int64.Type}, {"city", type text}, {"state", type text},
+				        {"latitude", type number}, {"longitude", type number},
+				        {"hour", Int64.Type}, {"day_of_week", type text},
+				        {"is_weekend", Int64.Type}, {"road_type", type text}, {"lanes", Int64.Type},
+				        {"traffic_signal", Int64.Type}, {"weather", type text}, {"visibility", type text},
+				        {"temperature", type number}, {"traffic_density", type text}, {"cause", type text},
+				        {"accident_severity", type text}, {"vehicles_involved", Int64.Type},
+				        {"casualties", Int64.Type}, {"is_peak_hour", Int64.Type}, {"festival", type text},
+				        {"risk_score", type number}, {"time", type text}
+				    }),
+				    ParsedDate = Table.TransformColumns(Typed, {{"date", ParseDate, type date}}),
+				    CleanNullFestival = Table.ReplaceValue(ParsedDate, "", null, Replacer.ReplaceValue, {"festival"}),
+				    AddLocationKey = Table.AddColumn(CleanNullFestival, "LocationKey", each [state] & "|" & [city], type text),
+				    AddDateKey = Table.AddColumn(AddLocationKey, "DateKey", each Date.ToText([date], "yyyyMMdd"), type text),
+				    AddRoadKey = Table.AddColumn(AddDateKey, "RoadTypeKey", each [road_type], type text),
+				    AddWeatherKey = Table.AddColumn(AddRoadKey, "WeatherKey", each [weather], type text),
+				    AddCauseKey = Table.AddColumn(AddWeatherKey, "CauseKey", each [cause], type text),
+				    AddSeverityKey = Table.AddColumn(AddCauseKey, "SeverityKey", each [accident_severity], type text),
+				    AddYear = Table.AddColumn(AddSeverityKey, "Year", each Date.Year([date]), Int64.Type),
+				    AddMonth = Table.AddColumn(AddYear, "Month", each Date.Month([date]), Int64.Type),
+				    AddMonthName = Table.AddColumn(AddMonth, "Month Name", each Date.MonthName([date]), type text),
+				    AddHourLabel = Table.AddColumn(AddMonthName, "Hour Label", each Text.PadStart(Text.From([hour]), 2, "0") & ":00", type text),
+				    RemoveDuplicates = Table.Distinct(AddHourLabel, {"accident_id"})
+				in
+				    RemoveDuplicates
+
+	annotation PBI_ResultType = Table
+

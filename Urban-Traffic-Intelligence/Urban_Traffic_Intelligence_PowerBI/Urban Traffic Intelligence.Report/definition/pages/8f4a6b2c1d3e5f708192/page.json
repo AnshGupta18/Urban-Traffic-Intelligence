@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "8f4a6b2c1d3e5f708192",
+  "displayName": "Traffic Safety Dashboard",
+  "displayOption": "FitToPage",
+  "height": 900,
+  "width": 1440
+}
